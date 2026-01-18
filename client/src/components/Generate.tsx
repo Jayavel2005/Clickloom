@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import type { IThumbnail } from "../../public/assets/assets";
 import SoftBackdrop from "./SoftBackdrop";
 import AspectRatioSelector from "./AspectRatioSelector";
+import StyleSelector from "./StyleSelector";
 
 const Generate = () => {
   const { id } = useParams();
@@ -63,6 +64,8 @@ const Generate = () => {
                 />
 
                 {/* Style Selector */}
+                <StyleSelector />
+
                 {/* Color pallete selector */}
 
                 {/* details */}
