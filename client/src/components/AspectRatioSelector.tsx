@@ -1,3 +1,4 @@
+import { RectangleHorizontal, RectangleVertical, Square } from "lucide-react";
 import React from "react";
 
 type AspectRatio = "16:9" | "1:1" | "9:16";
@@ -9,21 +10,25 @@ interface AspectRatioSelectorProps {
 
 const ASPECT_RATIOS: {
   label: string;
+  icon: any;
   value: AspectRatio;
   description: string;
 }[] = [
   {
     label: "16:9",
+    icon: <RectangleHorizontal />,
     value: "16:9",
     description: "YouTube, Thumbnails",
   },
   {
     label: "1:1",
+    icon: <Square />,
     value: "1:1",
     description: "Instagram, Square",
   },
   {
     label: "9:16",
+    icon: <RectangleVertical />,
     value: "9:16",
     description: "Shorts, Reels",
   },
@@ -48,7 +53,7 @@ const AspectRatioSelector: React.FC<AspectRatioSelectorProps> = ({
               key={ratio.value}
               type="button"
               onClick={() => onChange(ratio.value)}
-              className={`rounded-lg border px-3 py-3 text-left transition
+              className={`rounded-lg border flex flex-col items-center justify-center px-3 py-3 text-left transition
                 ${
                   active
                     ? "border-purple-500 bg-purple-500/10 text-white"
@@ -56,8 +61,9 @@ const AspectRatioSelector: React.FC<AspectRatioSelectorProps> = ({
                 }
               `}
             >
-              <p className="text-sm font-medium">{ratio.label}</p>
-              <p className="mt-1 text-xs text-zinc-400">{ratio.description}</p>
+              <p className="text-sm font-medium text-center">{ratio.label}</p>
+              {ratio.icon}
+              <p className="mt-1 text-xs text-zinc-400 text-center">{ratio.description}</p>
             </button>
           );
         })}
