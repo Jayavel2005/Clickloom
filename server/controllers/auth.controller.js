@@ -1,5 +1,7 @@
+import { cookieOptions } from "../config/cookie.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
+import { generateToken } from "../utils/jwt.js";
 import { checkUser, encryptPassword } from "../utils/passwordhash.js";
 
 export const signup = async (req, res, next) => {
@@ -21,15 +23,23 @@ export const signup = async (req, res, next) => {
       password: encryptedPassword,
     });
 
-    res.status(201).json({
-      success: true,
-      message: "User successfully created",
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-      },
+    const token = generateToken({
+      id: newUser._id,
+      email: newUser.email,
     });
+
+    res
+      .status(201)
+      .cookie("token", token, cookieOptions)
+      .json({
+        success: true,
+        message: "User successfully created",
+        user: {
+          id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+        },
+      });
   } catch (err) {
     next(err);
   }
@@ -48,15 +58,23 @@ export const login = async (req, res, next) => {
     const isUser = await checkUser(password, existingUser.password);
     if (!isUser) throw new ApiError(401, "Invalid credentials");
 
-    res.status(200).json({
-      success: true,
-      message: "User logged in successfully",
-      user: {
-        id: existingUser._id,
-        name: existingUser.name,
-        email: existingUser.email,
-      },
+    const token = generateToken({
+      id: existingUser._id,
+      email: existingUser.email,
     });
+
+    res
+      .status(200)
+      .cookie("token", token, cookieOptions)
+      .json({
+        success: true,
+        message: "User logged in successfully",
+        user: {
+          id: existingUser._id,
+          name: existingUser.name,
+          email: existingUser.email,
+        },
+      });
   } catch (err) {
     next(err);
   }

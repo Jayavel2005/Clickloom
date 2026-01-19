@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
-const app = express();
+import cookieParser from "cookie-parser";
 
+const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
 app.get("/health", (req, res) => {
