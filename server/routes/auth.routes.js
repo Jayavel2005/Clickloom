@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { login, signup } from "../controllers/auth.controller.js";
+import {
+  getMe,
+  login,
+  logout,
+  signup,
+} from "../controllers/auth.controller.js";
+import { requireAuth } from "../middlewares/auth.middleware.js";
 
 export const authRouter = Router();
 
 authRouter.post("/signup", signup);
 authRouter.post("/login", login);
+authRouter.post("/logout", logout);
+authRouter.get("/me", requireAuth, getMe);

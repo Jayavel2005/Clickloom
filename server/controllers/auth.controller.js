@@ -79,3 +79,27 @@ export const login = async (req, res, next) => {
     next(err);
   }
 };
+
+export const logout = (req, res, next) => {
+  try {
+    res
+      .clearCookie("token", {
+        httpOnly: true,
+        sameSite: "strict",
+      })
+      .status(200)
+      .json({
+        success: true,
+        message: "User logged out successgully",
+      });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getMe = (req, res) => {
+  res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+};
