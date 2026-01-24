@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-0 z-50 flex items-center justify-between w-full  px-6 md:px-16 lg:px-24 xl:px-32 backdrop-blur"
+        className="fixed top-0 z-50 flex items-center justify-between w-full py-4  px-6 md:px-16 lg:px-24 xl:px-32 backdrop-blur"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
@@ -20,10 +20,7 @@ export default function Navbar() {
       >
         <Link to="/">
           <div className="flex items-center justify-center gap-0">
-            <a href="">
-              <img src="/assets/logo.png" alt="logo" width={130} height={12} />
-            </a>
-            <span>Clickloom</span>
+            <span className="text-lg font-medium">AIrtist.</span>
           </div>
         </Link>
 

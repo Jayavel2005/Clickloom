@@ -47,8 +47,8 @@ export default function HeroSection() {
         viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
       >
-        Thumbnails that get clicks{" "}
-        <span className="move-gradient px-3 rounded-xl text-nowrap">
+        Visual Creation Made Simple
+        <span className="move-gradient ms-3 px-3 rounded-xl text-nowrap">
           Powered by AI.
         </span>
       </motion.h1>
@@ -65,8 +65,7 @@ export default function HeroSection() {
           mass: 1,
         }}
       >
-        No design skills needed. Generate high-CTR thumbnails in seconds with AI
-        that understands attention.
+        Design expressive images using intelligent generation.
       </motion.p>
       <motion.div
         className="flex items-center gap-4 mt-8"
