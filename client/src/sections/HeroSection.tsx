@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
   const specialFeatures = [
-    "No design skills needed",
-    "fast generation",
-    "High CTR templates",
+    "Turn ideas into visuals",
+    "Instant AI-powered generation",
+    "Beautiful, detailed images",
   ];
 
   const navigate = useNavigate();

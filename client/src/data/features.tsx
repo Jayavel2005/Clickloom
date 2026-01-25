@@ -4,20 +4,20 @@ import { Sparkles, Target, Sliders } from "lucide-react";
 export const featuresData: IFeature[] = [
   {
     icon: <Sparkles className="w-8 h-8 text-pink-500" strokeWidth={1.5} />,
-    title: "Instant AI Generation",
+    title: "Instant Image Generation",
     description:
-      "Generate eye-catching thumbnails in seconds from a simple prompt — no design skills required.",
+      "Generate high-quality AI images in seconds using simple text prompts — no design or editing skills required.",
   },
   {
     icon: <Target className="w-8 h-8 text-pink-500" strokeWidth={1.5} />,
-    title: "Optimized for Clicks",
+    title: "High-Quality Visual Output",
     description:
-      "Thumbnails are designed using visual-attention patterns proven to increase CTR.",
+      "Create detailed, visually rich images with cinematic lighting, depth, and professional-grade results.",
   },
   {
     icon: <Sliders className="w-8 h-8 text-pink-500" strokeWidth={1.5} />,
-    title: "Fully Customizable",
+    title: "Flexible & Creative Control",
     description:
-      "Edit text, colors, layout, and style to match your brand — complete creative control.",
+      "Customize prompts, styles, and visual details to shape images exactly the way you imagine.",
   },
 ];

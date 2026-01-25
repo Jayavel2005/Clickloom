@@ -8,7 +8,7 @@ export default function ContactSection() {
     <div className="px-4 md:px-16 lg:px-24 xl:px-32">
       <SectionTitle
         text1="Contact"
-        text2="Let’s build better thumbnails"
+        text2="Let’s build better Visuals"
         text3="Whether it’s feedback, support, or feature ideas — drop us a message and we’ll get back to you."
       />
       <form

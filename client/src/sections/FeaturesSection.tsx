@@ -11,7 +11,7 @@ export default function FeaturesSection() {
       <SectionTitle
         text1="Features"
         text2="What you get"
-        text3="Everything you need to create high-CTR thumbnails — fast, simple, and smart."
+        text3="Everything you need to create high-quality AI images — fast, simple, and powerful."
       />
       <div className="flex flex-wrap items-center justify-center gap-6 md:gap-4 mt-16 px-6">
         {featuresData.map((feature: IFeature, index: number) => (
@@ -50,13 +50,13 @@ export default function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
         >
-          Clickloom helps you generate scroll-stopping thumbnails optimized for
-          attention, emotion, and clarity — so you can focus on content, not
-          design.
+          AIrtist helps you generate high-quality images from text prompts,
+          focusing on creativity, detail, and visual clarity — so you can bring
+          ideas to life without complex tools.
         </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-3 mt-8 gap-10">
           <motion.div
-            className="md:col-span-2"
+            className="md:col-span-2 p-2"
             initial={{ y: 150, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
@@ -68,11 +68,11 @@ export default function FeaturesSection() {
             }}
           >
             <img
-              className="h-full w-auto"
+              className="h-full w-auto object-cover rounded-2xl"
               src="/assets/features-showcase-1.png"
               alt="features showcase"
-              width={1000}
-              height={500}
+
+
             />
           </motion.div>
           <motion.div
@@ -93,19 +93,20 @@ export default function FeaturesSection() {
               alt="features showcase"
               width={1000}
               height={500}
-              className="hover:-translate-y-0.5 transition duration-300"
+              className="hover:-translate-y-0.5 transition duration-300 rounded-2xl"
             />
             <h3 className="text-[24px]/7.5 text-slate-300 font-medium mt-6">
-              Better thumbnails. Higher clicks.{" "}
+              Better visuals. Faster creation.{" "}
             </h3>
             <p className="text-slate-300 mt-2">
-              More views without the design grind.
+              Create high-quality images instantly — no design experience
+              required.
             </p>
             <a
               href=""
               className="group flex items-center gap-2 mt-4 text-purple-600 hover:text-purple-700 transition"
             >
-              Learn how Clickloom works
+              See how it works
               <ArrowUpRight className="size-5 group-hover:translate-x-0.5 transition duration-300" />
             </a>
           </motion.div>
