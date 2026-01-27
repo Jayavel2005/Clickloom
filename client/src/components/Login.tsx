@@ -1,22 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import SoftBackdrop from "./SoftBackdrop";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const [state, setState] = React.useState<"login" | "register">("login");
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { login } = useAuth();
 
   const [formData, setFormData] = React.useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    console.log(name);
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (state === "login") {
+      setErrorMessage("");
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/v1/auth/login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            credentials: "include",
+          },
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setErrorMessage(data.message || "Login failed");
+        }
+
+        if (data.success) {
+          console.log("User logged in successfully.");
+          setErrorMessage("");
+          login(data.user)
+          navigate("/");
+        }
+      } catch (error) {
+        setErrorMessage("Something went wrong. Please try again.");
+        console.log(error);
+      }
+    }
+
+    if (state === "register") {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/v1/auth/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          },
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+          console.log("User created");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -34,8 +97,8 @@ const Login = () => {
           {/* Subheading */}
           <p className="text-gray-400 text-sm mt-2">
             {state === "login"
-              ? "Sign in to continue to Clickloom"
-              : "Start creating high-CTR thumbnails"}
+              ? "Sign in to continue to AIrtist"
+              : "Start creating high-visual Images ✨"}
           </p>
 
           {/* Name (Register only) */}
@@ -58,10 +121,10 @@ const Login = () => {
               </svg>
               <input
                 type="text"
-                name="name"
+                name="username"
                 placeholder="Your name"
                 className="w-full bg-transparent text-white placeholder-white/60 outline-none"
-                value={formData.name}
+                value={formData.username}
                 onChange={handleChange}
                 required
               />
@@ -123,6 +186,11 @@ const Login = () => {
               required
             />
           </div>
+          {errorMessage && (
+            <p className="mt-3 text-sm text-red-400 text-start">
+              {errorMessage}
+            </p>
+          )}
 
           {/* Forgot password */}
           {state === "login" && (

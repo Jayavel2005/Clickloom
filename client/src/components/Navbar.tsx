@@ -4,10 +4,13 @@ import { motion } from "motion/react";
 import { navlinks } from "../data/navlinks";
 import type { INavLink } from "../types";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { h1, p } from "motion/react-client";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, user, logout, loading } = useAuth();
 
   return (
     <>
@@ -37,17 +40,30 @@ export default function Navbar() {
           >
             My Generations
           </Link>
-          <Link to="/contact" className="hover:text-purple-500 transition">
+          <Link to="/#contact" className="hover:text-purple-500 transition">
             Contact
           </Link>
         </div>
 
-        <button
-          onClick={() => navigate("/login")}
-          className="hidden md:block px-6 py-2.5 bg-purple-600 hover:bg-purple-700 active:scale-95 transition-all rounded-full"
-        >
-          Get Started
-        </button>
+        {isAuthenticated ? (
+          <div className="hidden md:flex items-center gap-4">
+            <span className="text-sm text-gray-300">Hi, {user?.username}</span>
+            <button
+              onClick={logout}
+              className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-full"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => navigate("/login")}
+            className="hidden md:block px-6 py-2.5 bg-purple-600 hover:bg-purple-700 active:scale-95 transition-all rounded-full"
+          >
+            Get Started
+          </button>
+        )}
+
         <button onClick={() => setIsOpen(true)} className="md:hidden">
           <MenuIcon size={26} className="active:scale-90 transition" />
         </button>

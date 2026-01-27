@@ -50,6 +50,7 @@ export default function TiltedImage({ rotateAmplitude = 3, }) {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
+            id='airtist-preview-image'
         >
             <motion.div className="relative transform-3d w-full max-w-4xl" style={{ rotateX, rotateY }} >
                 <motion.img src="assets/hero_img_main.png"

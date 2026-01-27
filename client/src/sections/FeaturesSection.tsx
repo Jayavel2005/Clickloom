@@ -7,13 +7,16 @@ import type { IFeature } from "../types";
 
 export default function FeaturesSection() {
   return (
-    <div id="features" className="px-4 md:px-16 lg:px-24 xl:px-32">
+    <div className="px-4 md:px-16 lg:px-24 xl:px-32">
       <SectionTitle
         text1="Features"
         text2="What you get"
         text3="Everything you need to create high-quality AI images — fast, simple, and powerful."
       />
-      <div className="flex flex-wrap items-center justify-center gap-6 md:gap-4 mt-16 px-6">
+      <div
+        id="airtist-features-section"
+        className="flex flex-wrap items-center justify-center gap-6 md:gap-4 mt-16 px-6"
+      >
         {featuresData.map((feature: IFeature, index: number) => (
           <motion.div
             key={index}
@@ -41,7 +44,10 @@ export default function FeaturesSection() {
           </motion.div>
         ))}
       </div>
-      <div className="mt-40 relative mx-auto max-w-5xl">
+      <div
+        className="mt-40 relative mx-auto max-w-5xl"
+        id="airtist-create-images-section"
+      >
         <div className="absolute -z-50 size-100 -top-10 -left-20 aspect-square rounded-full bg-purple-500/40 blur-3xl"></div>
         <motion.p
           className="text-slate-300 text-lg text-left max-w-3xl"
@@ -71,8 +77,6 @@ export default function FeaturesSection() {
               className="h-full w-auto object-cover rounded-2xl"
               src="/assets/features-showcase-1.png"
               alt="features showcase"
-
-
             />
           </motion.div>
           <motion.div

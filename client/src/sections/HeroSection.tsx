@@ -46,9 +46,10 @@ export default function HeroSection() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 240, damping: 70, mass: 1 }}
+        id="airtist-hero-title"
       >
         Visual Creation Made Simple
-        <span className="move-gradient ms-3 px-3 rounded-xl text-nowrap">
+        <span className="move-gradient ms-3 px-3 rounded-xl text-nowrap" id="airtist-powered-ai">
           Powered by AI.
         </span>
       </motion.h1>
@@ -76,6 +77,7 @@ export default function HeroSection() {
       >
         <button
           onClick={() => navigate("/generate")}
+          id="airtist-generate-now-btn"
           className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-7 h-11"
         >
           Generate Now
@@ -86,7 +88,8 @@ export default function HeroSection() {
         </button>
       </motion.div>
 
-      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-14 mt-12">
+      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-14 mt-12"
+      id="airtist-feature-list">
         {specialFeatures.map((feature, index) => (
           <motion.p
             className="flex items-center gap-2"
@@ -95,6 +98,7 @@ export default function HeroSection() {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.2, duration: 0.3 }}
+
           >
             <CheckIcon className="size-5 text-purple-600" />
             <span className="text-slate-400">{feature}</span>

@@ -1,16 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SoftBackdrop from "./SoftBackdrop";
 import PreviewPanel from "./PreviewPanel";
+
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { useNavigate } from "react-router-dom";
 
 const Generate = () => {
   const [title, setTitle] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [imgUrl, setImgUrl] = useState<string | undefined>(
-    "https://res.cloudinary.com/dsnqjjhc9/image/upload/v1769240329/airtist/rhfvjg2dhjhegjrhngxq.png",
-  );
-  const [imageId, setImageId] = useState<string | null>();
+  const navigate = useNavigate();
+
+  const [imgUrl, setImgUrl] = useState("");
+  const [imageId, setImageId] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("airtist_generate_tour_seen")) return;
+
+    if (!localStorage.getItem("airtist_start_generate_tour")) return;
+
+    const driverObj = driver({
+      showProgress: true,
+      allowClose: true,
+      steps: [
+        {
+          element: "#airtist-prompt-input",
+          popover: {
+            title: "Describe your idea ✍️",
+            description:
+              "Start by describing what you imagine.\nThe clearer the idea, the better the result.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+        {
+          element: "#airtist-additional-details",
+          popover: {
+            title: "Add more details (optional)",
+            description:
+              "You can refine style, mood, or lighting here.\nThis step is optional.",
+            side: "bottom",
+            align: "center",
+          },
+        },
+        {
+          element: "#airtist-generate-btn",
+          popover: {
+            title: "Generate your image 🎨",
+            description: "Click here and let AIrtist bring your idea to life.",
+            side: "top",
+            align: "center",
+          },
+        },
+        {
+          element: "#airtist-preview-panel",
+          popover: {
+            title: "Preview your result 👀",
+            description:
+              "Your generated image appears here.\nYou can regenerate if needed.",
+            side: "left",
+            align: "center",
+          },
+        },
+        {
+          element: "#airtist-download-btn",
+          popover: {
+            title: "Download your image ⬇️",
+            description: "You’re all set!\nClick next to head back to Home.",
+            side: "top",
+            align: "center",
+            onNextClick: () => {
+              // ✅ mark generate tour as done
+              localStorage.setItem("airtist_generate_tour_seen", "true");
+
+              // ✅ cleanup trigger
+              localStorage.removeItem("airtist_start_generate_tour");
+
+              driverObj.destroy();
+              navigate("/"); // ⬅️ go back to Home
+            },
+          },
+        },
+      ],
+    });
+
+    driverObj.drive();
+
+    return () => driverObj.destroy();
+  }, [navigate]);
 
   async function generateImage() {
     try {
@@ -46,8 +125,6 @@ const Generate = () => {
 
   function downloadImage() {
     if (!imageId) return;
-
-    // Forces download without opening new tab
     window.location.href = `http://localhost:5000/api/v1/images/download/${imageId}`;
   }
 
@@ -65,6 +142,7 @@ const Generate = () => {
               </h2>
 
               <textarea
+                id="airtist-prompt-input"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 rows={6}
@@ -73,6 +151,7 @@ const Generate = () => {
               />
 
               <textarea
+                id="airtist-additional-details"
                 value={additionalDetails}
                 onChange={(e) => setAdditionalDetails(e.target.value)}
                 rows={4}
@@ -81,6 +160,7 @@ const Generate = () => {
               />
 
               <button
+                id="airtist-generate-btn"
                 disabled={loading || !title}
                 onClick={generateImage}
                 className="w-full rounded-xl bg-purple-600 py-3 text-white"
@@ -89,6 +169,7 @@ const Generate = () => {
               </button>
 
               <button
+                id="airtist-download-btn"
                 disabled={!imageId}
                 onClick={downloadImage}
                 className="w-full rounded-xl border border-purple-400 py-3 text-purple-300"
@@ -98,7 +179,9 @@ const Generate = () => {
             </div>
 
             {/* RIGHT */}
-            <PreviewPanel loading={loading} imageUrl={imgUrl} />
+            <div id="airtist-preview-panel">
+              <PreviewPanel loading={loading} imageUrl={imgUrl} />
+            </div>
           </div>
         </main>
       </div>

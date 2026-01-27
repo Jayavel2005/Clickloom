@@ -6,23 +6,25 @@ import "./globals.css";
 import LenisScroll from "./components/LenisScroll";
 import Login from "./components/Login";
 import Generate from "./components/Generate";
-Generate;
-Login;
+import MyGenerations from "./components/MyGenerations";
+import { AuthProvider } from "./contexts/AuthContext";
 
 export default function App() {
   return (
     <>
-      <LenisScroll />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/generate" element={<Generate />} />
-        <Route path="/generate/:id" element={<Generate />} />
-        {/* <Route path="/my-generation" element={<MyGeneration />} /> */}
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/login" element={<SignUp />} /> */}
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <LenisScroll />
+        <Navbar />
+
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/generate" element={<Generate />} />
+          <Route path="/my-generations" element={<MyGenerations />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
