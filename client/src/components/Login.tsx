@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SoftBackdrop from "./SoftBackdrop";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { successNotify } from "../utils/notify.util";
 
 const Login = () => {
   const [state, setState] = React.useState<"login" | "register">("login");
@@ -47,9 +48,9 @@ const Login = () => {
         }
 
         if (data.success) {
-          console.log("User logged in successfully.");
+          successNotify("User successfully logged in.");
           setErrorMessage("");
-          login(data.user)
+          login(data.user);
           navigate("/");
         }
       } catch (error) {
@@ -73,8 +74,15 @@ const Login = () => {
 
         const data = await response.json();
 
+        if (!response.ok) {
+          setErrorMessage(data.message || "SignUp Failed");
+        }
+
         if (data.success) {
-          console.log("User created");
+          successNotify("User Registered Successfully.");
+          setErrorMessage("");
+          login(data.user);
+          navigate("/");
         }
       } catch (error) {
         console.log(error);

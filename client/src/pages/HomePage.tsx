@@ -101,7 +101,6 @@ export default function HomePage() {
               localStorage.setItem("airtist_start_generate_tour", "true");
 
               driverObj.destroy();
-              navigate("/generate");
             },
           },
         },

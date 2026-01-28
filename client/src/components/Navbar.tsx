@@ -6,11 +6,13 @@ import type { INavLink } from "../types";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { h1, p } from "motion/react-client";
+import { useUI } from "../contexts/UIContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated, user, logout, loading } = useAuth();
+  const {accountIsOpen, setAccountIsOpen, toggleUI} = useUI();
 
   return (
     <>
@@ -46,14 +48,27 @@ export default function Navbar() {
         </div>
 
         {isAuthenticated ? (
-          <div className="hidden md:flex items-center gap-4">
-            <span className="text-sm text-gray-300">Hi, {user?.username}</span>
-            <button
-              onClick={logout}
-              className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-full"
+          <div className="relative">
+            <div
+              className="w-10 h-10 bg-violet-500  rounded-full flex justify-center items-center cursor-pointer"
+              onClick={toggleUI}
             >
-              Logout
-            </button>
+              <p className="text-2xl">{user.username.charAt(0)}</p>
+            </div>
+
+            <div
+              className={` absolute top-15 ${accountIsOpen ? " block" : " hidden"} bg-white/6 border border-white/10 rounded-2xl -right-20`}
+            >
+              <div className="flex flex-col gap-2 p-5">
+                <p className=" block w-40">Remaining Credits : 5</p>
+                <button
+                  onClick={logout}
+                  className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-full"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
           </div>
         ) : (
           <button

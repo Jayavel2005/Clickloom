@@ -1,10 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUI } from "./UIContext";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const {toggleUI} = useUI();
 
   // auto-login on app load
   useEffect(() => {
@@ -19,6 +23,7 @@ export const AuthProvider = ({ children }) => {
         if (res.ok) {
           setUser(data.user);
         } else {
+          navigate("/");
           setUser(null);
         }
       } catch {
@@ -41,6 +46,8 @@ export const AuthProvider = ({ children }) => {
       credentials: "include",
     });
     setUser(null);
+    toggleUI();
+    navigate("/login");
   };
 
   return (

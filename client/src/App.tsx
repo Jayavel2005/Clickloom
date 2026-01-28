@@ -8,23 +8,28 @@ import Login from "./components/Login";
 import Generate from "./components/Generate";
 import MyGenerations from "./components/MyGenerations";
 import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "react-hot-toast";
+import { UIContextProvider } from "./contexts/UIContext";
 
 export default function App() {
   return (
     <>
-      <AuthProvider>
-        <LenisScroll />
-        <Navbar />
+      <UIContextProvider>
+        <AuthProvider>
+          <LenisScroll />
+          <Navbar />
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/generate" element={<Generate />} />
-          <Route path="/my-generations" element={<MyGenerations />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/generate" element={<Generate />} />
+            <Route path="/my-generations" element={<MyGenerations />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
 
-        <Footer />
-      </AuthProvider>
+          <Footer />
+          <Toaster />
+        </AuthProvider>
+      </UIContextProvider>
     </>
   );
 }
