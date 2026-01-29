@@ -16,6 +16,7 @@ export default function HomePage() {
     if (localStorage.getItem("airtist_home_tour_seen")) return;
 
     const driverObj = driver({
+      popoverClass: "driverjs-theme",
       showProgress: true,
       animate: true,
       allowClose: true,

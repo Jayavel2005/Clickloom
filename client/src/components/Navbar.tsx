@@ -60,7 +60,7 @@ export default function Navbar() {
               className={` absolute top-15 ${accountIsOpen ? " block" : " hidden"} bg-white/6 border border-white/10 rounded-2xl -right-20`}
             >
               <div className="flex flex-col gap-2 p-5">
-                <p className=" block w-40">Remaining Credits : 5</p>
+                <p className=" block w-40">Remaining Credits : {user.credits}</p>
                 <button
                   onClick={logout}
                   className="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 rounded-full"

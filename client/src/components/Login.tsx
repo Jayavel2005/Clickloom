@@ -69,13 +69,16 @@ const Login = () => {
               "Content-type": "application/json",
             },
             body: JSON.stringify(formData),
+            credentials: "include",
           },
         );
 
         const data = await response.json();
+        console.log(data.user.username);
 
         if (!response.ok) {
           setErrorMessage(data.message || "SignUp Failed");
+          return;
         }
 
         if (data.success) {

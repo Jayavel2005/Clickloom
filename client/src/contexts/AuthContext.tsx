@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const {toggleUI} = useUI();
+  const { toggleUI } = useUI(); // 👈 close, not toggle
 
   // auto-login on app load
   useEffect(() => {
@@ -18,14 +18,13 @@ export const AuthProvider = ({ children }) => {
           credentials: "include",
         });
 
-        const data = await res.json();
-
-        if (res.ok) {
-          setUser(data.user);
-        } else {
-          navigate("/");
+        if (!res.ok) {
           setUser(null);
+          return;
         }
+
+        const data = await res.json();
+        setUser(data.user);
       } catch {
         setUser(null);
       } finally {
@@ -36,18 +35,31 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  // called after login API success
   const login = (userData) => {
     setUser(userData);
   };
 
+  // logout user
   const logout = async () => {
     await fetch("http://localhost:5000/api/v1/auth/logout", {
       method: "POST",
       credentials: "include",
     });
+
     setUser(null);
-    toggleUI();
+    toggleUI(); // 👈 deterministic
     navigate("/login");
+  };
+
+  // update credits safely
+  const updateCredits = (credits) => {
+    setUser((prev) => (prev ? { ...prev, credits } : prev));
+  };
+
+  // update images safely
+  const updateImages = (images) => {
+    setUser((prev) => (prev ? { ...prev, images } : prev));
   };
 
   return (
@@ -58,6 +70,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         logout,
+        updateCredits, // 👈 NEW
+        updateImages,  // 👈 NEW
       }}
     >
       {children}
@@ -66,4 +80,10 @@ export const AuthProvider = ({ children }) => {
 };
 
 // custom hook
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+  return ctx;
+};

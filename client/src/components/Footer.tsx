@@ -23,10 +23,10 @@ export default function Footer() {
         <Link to="/">
           <img
             className="size-8 aspect-square"
-            src="/assets/footer-logo.svg"
+            src="/assets/android-chrome-512x512.png"
             alt="AIrtist logo"
-            width={32}
-            height={32}
+            width={42}
+            height={42}
           />
         </Link>
 
