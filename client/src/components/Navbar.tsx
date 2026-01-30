@@ -53,7 +53,7 @@ export default function Navbar() {
               className="w-10 h-10 bg-violet-500  rounded-full flex justify-center items-center cursor-pointer"
               onClick={toggleUI}
             >
-              <p className="text-2xl">{user.username.charAt(0)}</p>
+              <p className="text-2xl">{user.username.charAt(0).toUpperCase()}</p>
             </div>
 
             <div
